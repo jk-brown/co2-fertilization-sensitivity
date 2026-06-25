@@ -30,4 +30,4 @@ Please use a clear file naming convention and descriptive commit messages.
 
 ## Contributors
 
-Joe Brown
+Joe Brown, 
