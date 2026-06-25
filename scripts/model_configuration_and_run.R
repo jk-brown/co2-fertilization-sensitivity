@@ -29,3 +29,20 @@ beta_values_rn <- beta_values %>%
   mutate(run_number = row_number())
 write.csv(beta_values_rn, "data/beta_values_rn.csv", row.names = FALSE)
 
+# 4.0 Run Hector-Matilda
+# variables to save 
+vars = c(NPP(), VEG_C(), SOIL_C(),CONCENTRATIONS_CO2(), GMST())
+
+# run the model
+mod_result <- iterate_model(
+  core = core,
+  params = beta_values,
+  save_years = 1850:2100,
+  save_vars = vars)
+
+# save model result
+write.csv(mod_result, "outputs/initial_model_result.csv", row.names = F)
+
+
+
+
