@@ -30,5 +30,6 @@ Please use a clear file naming convention and descriptive commit messages.
 
 ## Contributors
 
-Joe Brown, 
-Sofia Vinnik
+Joe Brown,
+Sofia Vinnik,
+Izzah Shah
