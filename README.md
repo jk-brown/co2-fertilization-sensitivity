@@ -17,6 +17,7 @@ Because atmospheric CO2 influences global temperature, uncertainty in BETA may a
 ## Current Repository Structure
 
 ```text
+data/       Data saved from running code
 scripts/    R scripts for running and analyzing simulations
 outputs/    Figures, tables, and model results
 ```
