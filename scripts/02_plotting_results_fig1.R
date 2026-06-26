@@ -1,6 +1,3 @@
-# load libraries
-source("scripts/load_libraries.R")
-
 # read in beta params with run_number
 beta_values_rn <- read.csv("data/beta_values_rn.csv")
 
