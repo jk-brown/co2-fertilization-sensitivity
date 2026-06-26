@@ -1,8 +1,7 @@
 # Config and run Hector with Matilda
 
 # 1.0 Load libraries 
-library(matilda)
-library(tidyverse)
+source("scripts/source/source_all.R")
 
 # 2.0 Initialize model instance 
 ## Load INI file -- SSP2-4.5 Climate Scenario
