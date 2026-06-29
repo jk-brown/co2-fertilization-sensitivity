@@ -1,4 +1,4 @@
 # source all
 
-source("scripts/load_libraries.R")
-source("scripts/helper_functions.R")
+source("scripts/source/load_libraries.R")
+source("scripts/source/helper_functions.R")

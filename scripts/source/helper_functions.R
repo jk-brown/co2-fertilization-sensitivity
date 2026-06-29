@@ -1,18 +1,22 @@
 # helper functions
 
-#' Normalize GMST anomaly to a reference period
+#' This function normalizes global mean surface temperature anomaly (`gmst`)
+#' values to a specified reference period. Normalization is performed separately
+#' for each `run_number` by subtracting the mean GMST value during the reference
+#' period from all GMST values in that run. All non-GMST variables are returned
+#' unchanged.
 #'
-#' This function normalizes time-series global mean surface temperature anomaly
-#' data.
+#' @param data A data frame containing model output. Must include the columns
+#'   `run_number`, `variable`, `year`, and `value`.
+#' @param ref_start Numeric. First year of the reference period. Defaults to 1850.
+#' @param ref_end Numeric. Last year of the reference period. Defaults to 1900.
 #'
-#' @param data a data frame object with GMST required as a variable. 
-#' @param ref_start start date for reference year range. Defaults to 1850.
-#' @param ref_end end date for the reference year range. Defaults to 1900.
-#'
-#' @returns returns a df with with GMST values normalized.
+#' @return A data frame with GMST values normalized to the reference period.
+#'   Non-GMST variables are unchanged.
 #' @export
 #'
 #' @examples
+#' normalized_data <- normalize_gmst(model_output)
 normalize_gmst <- function(data,              
                            ref_start = 1850, 
                            ref_end = 1900) {
@@ -73,8 +77,7 @@ produce_metrics <- function(data, var, years = 2081:2100, FUN = mean) {
   
   return_df <- metric_results %>%
     mutate(variable = var) %>% 
-    rename(value = metric_result) %>% 
-    left_join(beta_vals_rn, by = "run_number")
+    rename(value = metric_result)
   
   return(return_df)
 }
