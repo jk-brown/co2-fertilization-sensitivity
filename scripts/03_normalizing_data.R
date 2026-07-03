@@ -22,3 +22,16 @@ mean_ref_dat <- mean(ref_period$value, na.rm = TRUE)
 
 gmst_subset$value <- gmst_subset$value - mean_ref_dat  
 
+df_normalized <- rbind(var_subset, gmst_subset)
+
+return(df_normalized)
+})
+
+mod_result_norm <- do.call(r.bind, normalized_list)
+
+rownames(mod_result_norm) <- NULL
+
+return(mod_result_norm)
+
+}
+
