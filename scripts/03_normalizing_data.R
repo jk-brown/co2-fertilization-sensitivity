@@ -35,3 +35,15 @@ return(mod_result_norm)
 
 }
 
+mod_result_norm <- normalize_gmst(mod_result,
+                                  ref_start = 1850,
+                                  ref_end = 1900)
+
+lc_warming <- new_metric(var= "gmst", years = 2081:2100, op = mean)
+
+lc_warming_results <- metric_calc(x = mod_result_norm,
+                                  metric = lc_warming)
+
+head(lc_warming_results)
+
+
