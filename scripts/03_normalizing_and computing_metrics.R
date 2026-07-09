@@ -62,17 +62,17 @@ lc_veg_c <-produce_metrics(
 
 lc_soil_c <- produce_metrics(
   data =  mod_result_norm,
-  var = "SOIL_C()",
+  var = SOIL_C(),
   FUN = median)
 
 lc_concentrations_co2 <- produce_metrics(
   data = mod_result_norm,
-  var = "CONCENTRATIONS_CO2()",
+  var = CONCENTRATIONS_CO2(),
   FUN = median)
 
 lc_gmst <- produce_metrics(
   data = mod_result_norm,
-  var = "GMST()",
+  var = GMST(),
   FUN = median)
 
 # Once metric summary data frames are created from the above code, we can combine all 
