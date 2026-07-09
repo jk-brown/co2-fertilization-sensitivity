@@ -1,3 +1,6 @@
+# Source 
+source("scripts/source/source_all.R")
+
 # BETA Effect Summarization
 
 # Questions
