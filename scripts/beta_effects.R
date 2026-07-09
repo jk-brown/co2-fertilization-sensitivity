@@ -13,3 +13,4 @@ source("scripts/source/source_all.R")
 beta_effect <-beta_effect_data(lc_metric_results)
 
 # Q2) Compute standardized difference between low and high beta for each variable (Izzah)
+beta_signal <- beta_signal_data(lc_metric_results)
