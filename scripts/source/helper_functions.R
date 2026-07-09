@@ -81,3 +81,116 @@ produce_metrics <- function(data, var, years = 2081:2100, FUN = mean) {
   
   return(return_df)
 }
+
+
+
+# beta_effect_data
+#' Title
+#'
+#' @param data 
+#' @param beta_low 
+#' @param beta_high 
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+beta_effect_data <- function(data, beta_low = 0.20, beta_high = 0.80) {
+  
+  # define low and high beta values
+  beta_low_cutoff <- quantile(data$BETA, beta_low, na.rm = TRUE)
+  beta_high_cutoff <- quantile(data$BETA, beta_high, na.rm = TRUE)
+  
+  # Add BETA group labels
+  data_beta <- data %>%
+    mutate(
+      beta_group = case_when(
+        BETA <= beta_low_cutoff ~ "Low BETA",
+        BETA >= beta_high_cutoff ~ "High BETA",
+        TRUE ~ "Middle BETA"
+      ),
+      beta_group = factor(
+        beta_group,
+        levels = c("Low BETA", "Middle BETA", "High BETA")
+      )
+    )
+  
+  # summarize variable values for plotting 
+  data_for_plot <- data_beta %>%
+    group_by(variable, beta_group) %>%
+    summarize(
+      mean_value = mean(value, na.rm = TRUE),
+      lower_value = quantile(value, 0.05, na.rm = TRUE),
+      upper_value = quantile(value, 0.95, na.rm = TRUE),
+      .groups = "drop"
+    )
+  
+  # return this data frame
+  return(data_for_plot)
+}
+
+#beta_signal
+
+#' beta_signal_data
+#'
+#' @param data 
+#' @param beta_low 
+#' @param beta_high 
+#'
+#' @returns
+#' @export
+#'
+#' @examples
+beta_signal_data <- function(data, beta_low = 0.20, beta_high = 0.80) {
+  
+  # define low and high beta values
+  beta_low_cutoff <- quantile(data$BETA, beta_low, na.rm = TRUE)
+  beta_high_cutoff <- quantile(data$BETA, beta_high, na.rm = TRUE)
+  
+  # Keep ONLY low and high BETA runs
+  data_beta <- data %>%
+    mutate(
+      beta_group = case_when(
+        BETA <= beta_low_cutoff ~ "low",
+        BETA >= beta_high_cutoff ~ "high",
+        TRUE ~ NA_character_
+      )
+    ) %>%
+    filter(!is.na(beta_group))
+  
+  # Summarize variables based by their BETA group
+  group_summary <- data_beta %>%
+    group_by(variable, beta_group) %>%
+    summarize(
+      mean_value = mean(value, na.rm = TRUE),
+      sd_value = sd(value, na.rm = TRUE),
+      n = n(),
+      .groups = "drop"
+    )
+  
+  # calculate standardized separation -- how far apart are high and low beta runs
+  separation_plot_data <- group_summary %>%
+    tidyr::pivot_wider(
+      names_from = beta_group,
+      values_from = c(mean_value, sd_value, n)
+    ) %>%
+    mutate(
+      difference = mean_value_high - mean_value_low,
+      pooled_sd = sqrt(
+        ((n_low - 1) * sd_value_low^2 + (n_high - 1) * sd_value_high^2) / (n_low + n_high - 2)),
+      standardized_separation = difference / pooled_sd,
+      abs_standardized_separation = abs(standardized_separation)
+    )
+  
+  # return the new data frame
+  return(separation_plot_data)
+  
+}
+
+
+
+
+
+
+
+

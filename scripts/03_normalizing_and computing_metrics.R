@@ -74,3 +74,8 @@ lc_metric_results <- do.call(rbind,
                                   lc_soil_c, 
                                   lc_concentrations_co2,
                                   lc_gmst))
+
+# Add the BETA values 
+beta_vals_rn <- read.csv("data/beta_values_rn.csv")
+lc_metric_results <- lc_metric_results %>%
+  left_join(beta_vals_rn, by = "run_number")
