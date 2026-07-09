@@ -1,6 +1,9 @@
 # Source 
 source("scripts/source/source_all.R")
 
+# load metric_results 
+lc_metric_results <- read.csv("outputs/lc_metric_results.csv")
+
 # BETA Effect Summarization
 
 # Questions
