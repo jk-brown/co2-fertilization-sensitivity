@@ -50,9 +50,6 @@ source("scripts/source/source_all.R")
 # Name each object with lc (for late-century) and the variable being summarized:
 # ex: 'lc_soil_c'
 
-library(tidyverse)
-library(matilda)
-
 lc_soil_c <- produce_metrics(
   data =  #TODO: replace with normalized object from Step 2.0,
   var = "SOIL_C()",
