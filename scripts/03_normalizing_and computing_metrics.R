@@ -50,7 +50,23 @@ source("scripts/source/source_all.R")
 # Name each object with lc (for late-century) and the variable being summarized:
 # ex: 'lc_soil_c'
 
+library(tidyverse)
+library(matilda)
 
+lc_soil_c <- produce_metrics(
+  data =  #TODO: replace with normalized object from Step 2.0,
+  var = "SOIL_C()",
+  FUN = median)
+
+lc_concentrations_co2 <- produce_metrics(
+  data = #TODO: replace with normalized object from Step 2.0,
+  var = "CONCENTRATIONS_CO2()",
+  FUN = median)
+
+lc_gmst <- produce_metrics(
+  data = #TODO: replace with normalized object from Step 2.0,
+  var = "GMST()",
+  FUN = median)
 
 # Once metric summary data frames are created from the above code, we can combine all 
 # these metric data frames into a single data frame with all the long-term, late-century (2081-2100) 
@@ -59,5 +75,5 @@ lc_metric_results <- do.call(rbind,
                              list(lc_npp, 
                                   lc_veg_c, 
                                   lc_soil_c, 
-                                  lc_co2_concentration,
+                                  lc_concentrations_co2,
                                   lc_gmst))
