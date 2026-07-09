@@ -51,17 +51,17 @@ source("scripts/source/source_all.R")
 # ex: 'lc_soil_c'
 
 lc_soil_c <- produce_metrics(
-  data =  #TODO: replace with normalized object from Step 2.0,
+  data =  mod_result_norm,
   var = "SOIL_C()",
   FUN = median)
 
 lc_concentrations_co2 <- produce_metrics(
-  data = #TODO: replace with normalized object from Step 2.0,
+  data = mod_result_norm,
   var = "CONCENTRATIONS_CO2()",
   FUN = median)
 
 lc_gmst <- produce_metrics(
-  data = #TODO: replace with normalized object from Step 2.0,
+  data = mod_result_norm,
   var = "GMST()",
   FUN = median)
 
