@@ -10,6 +10,6 @@ source("scripts/source/source_all.R")
 # process?
 
 # Q1) Compute the beta effect for all variables using beta_effect_data function (Sofia)
-
+beta_effect <-beta_effect_data(lc_metric_results)
 
 # Q2) Compute standardized difference between low and high beta for each variable (Izzah)
