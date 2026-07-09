@@ -89,3 +89,7 @@ lc_metric_results <- do.call(rbind,
 beta_vals_rn <- read.csv("data/beta_values_rn.csv")
 lc_metric_results <- lc_metric_results %>%
   left_join(beta_vals_rn, by = "run_number")
+
+# Save metrics 
+write.csv(lc_metric_results, "outputs/lc_metric_results.csv", row.names = FALSE)
+
