@@ -28,8 +28,9 @@ source("scripts/source/source_all.R")
 # Open the file `scripts/source/helper_functions.R` and read the usage comments above 
 # the normalize_gmst() for how to use.
 # Be sure to use a good object name.
-
-
+mod_result_norm <- normalize_gmst(model_result,
+                                  ref_start = 1850, 
+                                  ref_end = 1900)
 
 # Izzah (2): 
 # 3.0 Compute long-term median for NPP() and VEG_C()
@@ -39,8 +40,17 @@ source("scripts/source/source_all.R")
 # Name each object with lc (for late-century) and the variable being summarized:
 # ex: 'lc_npp'
 # The result will be a new dataframe added to the global environment (top right panel).
+lc_npp <- produce_metrics(
+  data = mod_result_norm, 
+  var =NPP(),
+  years = 2081:2100,
+  FUN = median)
 
-
+lc_veg_c <-produce_metrics(
+  data = mod_result_norm, 
+  var = VEG_C(),
+  years = 2081:2100,
+  FUN = median)
 
 # Sofia (1):
 # 3.1 Compute long-term median for SOIL_C(), CONCENTRATIONS_CO2(), GMST() 
@@ -74,3 +84,8 @@ lc_metric_results <- do.call(rbind,
                                   lc_soil_c, 
                                   lc_concentrations_co2,
                                   lc_gmst))
+
+# Add the BETA values 
+beta_vals_rn <- read.csv("data/beta_values_rn.csv")
+lc_metric_results <- lc_metric_results %>%
+  left_join(beta_vals_rn, by = "run_number")
