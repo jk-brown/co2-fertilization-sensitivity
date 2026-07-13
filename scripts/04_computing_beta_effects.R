@@ -4,7 +4,7 @@ source("scripts/source/source_all.R")
 # load metric_results 
 lc_metric_results <- read.csv("outputs/lc_metric_results.csv")
 
-# BETA Effect Summarization
+# BETA Effect Summary
 
 # Questions
 # 1) How different are model output variables across low, middle, high BETA values. 
