@@ -188,8 +188,32 @@ beta_signal_data <- function(data, beta_low = 0.20, beta_high = 0.80) {
 }
 
 
-
-
+#' Plotting Beta Effect for given data set
+#'
+#' @param colors Character string of colors for BETA factor levels.
+#' @param x 
+#' @param var 
+#'
+#' @returns A plot with summary values for each BETA factor level.
+#' @export
+#'
+#' @examples
+plot_beta_effect <- function(x,units, colors, var) {
+  
+  #subset
+  data <- subset(x = x,
+                variable == var)
+  
+  # plotting
+  ggplot(data = data, aes(x = beta_group, y = mean_value, color = beta_group)) +
+  geom_pointrange(aes(ymin = lower_value, ymax = upper_value), size = 0.8) +
+  labs(y = units,
+       x = "BETA Group",
+       title = unique(data$variable)) +
+  scale_color_manual(values = setNames(colors, c("Low BETA", "Middle BETA", "High BETA"))) +
+  guides(color = "none") +
+  theme_light()
+}
 
 
 
