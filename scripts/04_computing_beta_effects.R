@@ -4,7 +4,7 @@ source("scripts/source/source_all.R")
 # load metric_results 
 lc_metric_results <- read.csv("outputs/lc_metric_results.csv")
 
-# BETA Effect Summarization
+# BETA Effect Summary
 
 # Questions
 # 1) How different are model output variables across low, middle, high BETA values. 
@@ -20,7 +20,7 @@ beta_signal <- beta_signal_data(lc_metric_results)
 
 ## Plotting Results 
 
-# Q1 -- Plot mean values with CI (5-95%)
+# Q1 -- Initial plot for mean values with CI (5-95%)
 
 beta_effect_plot <- ggplot(
   data = beta_effect, 

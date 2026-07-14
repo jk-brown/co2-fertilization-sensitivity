@@ -14,8 +14,8 @@
 # Izzah (2): Use the produce_metrics() function to compute long-term medians for: NPP() and VEG_C()
 # Sofia: Use the produce_metrics() function to compute long-term median for: SOIL_C(), CONCENTRATIONS_CO2(), and GMST()
 
-# 1.0 Load our prelim test data saved in our project.
-model_result <- read.csv("outputs/initial_model_result.csv")
+# 1.0 If it is not already loaded, add prelim test data saved in our project.
+mod_result <- read.csv("outputs/initial_model_result.csv")
 
 # 1.1 Source our helper functions 
 # Check out the the helper_functions.R in the 'source' folder.
@@ -28,7 +28,7 @@ source("scripts/source/source_all.R")
 # Open the file `scripts/source/helper_functions.R` and read the usage comments above 
 # the normalize_gmst() for how to use.
 # Be sure to use a good object name.
-mod_result_norm <- normalize_gmst(model_result,
+mod_result_norm <- normalize_gmst(mod_result,
                                   ref_start = 1850, 
                                   ref_end = 1900)
 
@@ -91,5 +91,7 @@ lc_metric_results <- lc_metric_results %>%
   left_join(beta_vals_rn, by = "run_number")
 
 # Save metrics 
-write.csv(lc_metric_results, "outputs/lc_metric_results.csv", row.names = FALSE)
+write.csv(x = lc_metric_results, 
+          file = "outputs/lc_metric_results.csv", 
+          row.names = FALSE)
 
