@@ -241,10 +241,24 @@ ggsave(filename ="figures/beta_on_npp_plot.png",
 ### We need to make the above figure for each of the 
 
 ## Plot 2b - VEG_C
-
+beta_on_veg_c_plot <- 
+  plot_beta_effect(
+    x = beta_effect, 
+    units = veg_c_units, 
+    var = "veg_c", 
+    colors = beta_group_cols
+  )
+beta_on_veg_c_plot
 
 ## Plot 2c - SOIL_C
-
+beta_on_soil_c_plot <- 
+  plot_beta_effect(
+    x = beta_effect, 
+    units = soil_c_units, 
+    var = "soil_c", 
+    colors = beta_group_cols
+  )
+beta_on_soil_c_plot
 
 ## Plot 2d - CO2_concentrations
 beta_on_CO2_concentration_plot <- 
