@@ -62,17 +62,73 @@ ggsave(filename ="figures/npp_plot.png",
 #TODO
 ## Plot 1d - CONCENTRATIONS_CO2 
 # get subset of CONCENTRATIONS_CO2 data
+CO2_concentration_dat <- subset(x = time_series_plot_data, 
+                  variable == "CO2_concentration")
+CO2_concentration_units <- unique(CO2_concentration_dat$units)
 
 # plot CONCENTRATIONS_CO2
+CO2_concentration_plot <-
+  ggplot(data = CO2_concentration_dat) +
+  geom_line(aes(
+    x = year,
+    y = value,
+    group = run_number,
+    color = beta_group
+  ),
+  alpha = 0.35) +
+  labs(x = "Year", 
+       y = CO2_concentration_units, 
+       color = "BETA Group") +
+  scale_color_manual(values = setNames(
+    beta_group_cols, 
+    c(low_beta_label, "Middle BETA", high_beta_label))) +
+  theme_light()
+CO2_concentration_plot
 
+# save plot 
+ggsave(filename ="figures/CO2_concentration_plot.png", 
+       plot = CO2_concentration_plot, 
+       device = "png", 
+       width = 7, 
+       height = 5, 
+       units = "in", 
+       dpi = 300)
 
 # Sofia 
 #TODO
 ## Plot 1e - GMST 
 # get subset of GMST data
+gmst_dat <- subset(x = time_series_plot_data, 
+                  variable == "gmst")
+gmst_units <- unique(gmst_dat$units)
 
 # plot CONCENTRATIONS_CO2
+gmst_plot <-
+  ggplot(data = gmst_dat) +
+  geom_line(aes(
+    x = year,
+    y = value,
+    group = run_number,
+    color = beta_group
+  ),
+  alpha = 0.35) +
+  labs(x = "Year", 
+       y = gmst_units, 
+       color = "BETA Group") +
+  scale_color_manual(values = setNames(
+    beta_group_cols, 
+    c(low_beta_label, "Middle BETA", high_beta_label))) +
+  theme_light()
+gmst_plot
 
+# save plot 
+ggsave(filename ="figures/gmst_plot.png", 
+       plot = gmst_plot, 
+       device = "png", 
+       width = 7, 
+       height = 5, 
+       units = "in", 
+       dpi = 300)
 
 
 ###### Keep below for making combined figures. 
