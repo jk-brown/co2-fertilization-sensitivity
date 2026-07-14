@@ -219,13 +219,14 @@ combined_plot
 ## Plot each panel individually
 ## Plot 2a - NPP
 
+
 beta_on_npp_plot <- 
   plot_beta_effect(
-    x = beta_effect,
-    units = npp_units,
-    var = "NPP",
+    x = beta_effect, 
+    units = npp_units, 
+    var = "NPP", 
     colors = beta_group_cols
-  )
+    )
 beta_on_npp_plot
 
 # save plot 
@@ -241,49 +242,47 @@ ggsave(filename ="figures/beta_on_npp_plot.png",
 
 ## Plot 2b - VEG_C
 
-beta_on_veg_c_plot <- 
-  plot_beta_effect(
-    x = beta_effect,
-    units = veg_c_units,
-    var = "veg_c",
-    colors = beta_group_cols
-  )
-beta_on_veg_c_plot
-
-# save plot 
-ggsave(filename ="figures/beta_on_veg_c_plot.png", 
-       plot = beta_on_veg_c_plot, 
-       device = "png", 
-       width = 5, 
-       height = 3, 
-       units = "in", 
-       dpi = 300)
 
 ## Plot 2c - SOIL_C
 
-beta_on_soil_c_plot <- 
+
+## Plot 2d - CO2_concentrations
+beta_on_CO2_concentration_plot <- 
   plot_beta_effect(
-    x = beta_effect,
-    units = soil_c_units,
-    var = "soil_c",
+    x = beta_effect, 
+    units = CO2_concentration_units, 
+    var = "CO2_concentration", 
     colors = beta_group_cols
   )
-beta_on_soil_c_plot
+beta_on_CO2_concentration_plot
 
 # save plot 
-ggsave(filename ="figures/beta_on_soil_c_plot.png", 
-       plot = beta_on_soil_c_plot, 
+ggsave(filename ="figures/beta_on_CO2_concentration_plot.png", 
+       plot = beta_on_CO2_concentration_plot, 
        device = "png", 
        width = 5, 
        height = 3, 
        units = "in", 
        dpi = 300)
 
-## Plot 2d - CO2_concentrations
-
-
 ## Plot 2e - gmst
+beta_on_gmst_plot <- 
+  plot_beta_effect(
+    x = beta_effect, 
+    units = gmst_units, 
+    var = "gmst", 
+    colors = beta_group_cols
+  )
+beta_on_gmst_plot
 
+# save plot 
+ggsave(filename ="figures/beta_on_gmst_plot.png", 
+       plot = beta_on_gmst_plot, 
+       device = "png", 
+       width = 5, 
+       height = 3, 
+       units = "in", 
+       dpi = 300)
 
 # Plot 3: Standardized BETA signal across variables
 
