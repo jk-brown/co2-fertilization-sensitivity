@@ -200,7 +200,7 @@ combined_plot <-
   npp_plot +
   veg_c_plot +
   soil_c_plot +
-  co2_plot +
+  CO2_concentration_plot +
   gmst_plot +
   guide_area() +
   plot_layout(
@@ -218,28 +218,14 @@ combined_plot
 
 ## Plot each panel individually
 ## Plot 2a - NPP
-beta_on_npp_effect <- subset(x = beta_effect, 
-                             variable == "NPP")
-beta_on_npp_plot <- ggplot(data = beta_on_npp_effect, 
-                      aes(x = beta_group, 
-                          y = mean_value,
-                          color = beta_group)) +
-  geom_pointrange(
-    aes(
-      ymin = lower_value,
-      ymax = upper_value), 
-    size = 0.8) + 
-  labs(
-    y = npp_units,
-    x = "BETA Group",
-    title = "Mean Late-century variable response (95% CI)"
-  ) + 
-  scale_color_manual(
-    values = setNames(
-      beta_group_cols, 
-    c("Low BETA", "Middle BETA", "High BETA"))) +
-  guides(color = "none") +
-  theme_light()
+
+beta_on_npp_plot <- 
+  plot_beta_effect(
+    x = beta_effect,
+    units = npp_units,
+    var = "NPP",
+    colors = beta_group_cols
+  )
 beta_on_npp_plot
 
 # save plot 
@@ -255,9 +241,43 @@ ggsave(filename ="figures/beta_on_npp_plot.png",
 
 ## Plot 2b - VEG_C
 
+beta_on_veg_c_plot <- 
+  plot_beta_effect(
+    x = beta_effect,
+    units = veg_c_units,
+    var = "veg_c",
+    colors = beta_group_cols
+  )
+beta_on_veg_c_plot
+
+# save plot 
+ggsave(filename ="figures/beta_on_veg_c_plot.png", 
+       plot = beta_on_veg_c_plot, 
+       device = "png", 
+       width = 5, 
+       height = 3, 
+       units = "in", 
+       dpi = 300)
 
 ## Plot 2c - SOIL_C
 
+beta_on_soil_c_plot <- 
+  plot_beta_effect(
+    x = beta_effect,
+    units = soil_c_units,
+    var = "soil_c",
+    colors = beta_group_cols
+  )
+beta_on_soil_c_plot
+
+# save plot 
+ggsave(filename ="figures/beta_on_soil_c_plot.png", 
+       plot = beta_on_soil_c_plot, 
+       device = "png", 
+       width = 5, 
+       height = 3, 
+       units = "in", 
+       dpi = 300)
 
 ## Plot 2d - CO2_concentrations
 
