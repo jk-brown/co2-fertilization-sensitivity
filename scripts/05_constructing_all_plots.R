@@ -46,17 +46,78 @@ ggsave(filename ="figures/npp_plot.png",
 
 # Izzah 
 #TODO
-## Plot 1b - VEG_C 
-# get subset of VEG_C data
+## Plot 1b - veg_c 
+# get subset of veg_c data
+veg_c_dat <- subset(x = time_series_plot_data, 
+                  variable == "veg_c")
+veg_c_units <- unique(veg_c_dat$units)
 
+# plot VEG_C
+
+veg_c_plot <-
+  ggplot(data = veg_c_dat) +
+  geom_line(aes(
+    x = year,
+    y = value,
+    group = run_number,
+    color = beta_group
+  ),
+  alpha = 0.35) +
+  labs(x = "Year", 
+       y = veg_c_units, 
+       color = "BETA Group") +
+  scale_color_manual(values = setNames(
+    beta_group_cols, 
+    c(low_beta_label, "Middle BETA", high_beta_label))) +
+  theme_light()
+veg_c_plot
+
+# save plot 
+ggsave(filename ="figures/veg_c_plot.png", 
+       plot = veg_c_plot, 
+       device = "png", 
+       width = 7, 
+       height = 5, 
+       units = "in", 
+       dpi = 300)
 
 # Izzah 
 #TODO
 ## Plot 1c - SOIL_C 
 # get subset of SOIL_C data
 
+soil_c_dat <- subset(x = time_series_plot_data, 
+                    variable == "soil_c")
+soil_c_units <- unique(soil_c_dat$units)
+
 # plot SOIL_C
 
+soil_c_plot <-
+  ggplot(data = soil_c_dat) +
+  geom_line(aes(
+    x = year,
+    y = value,
+    group = run_number,
+    color = beta_group
+  ),
+  alpha = 0.35) +
+  labs(x = "Year", 
+       y = soil_c_units, 
+       color = "BETA Group") +
+  scale_color_manual(values = setNames(
+    beta_group_cols, 
+    c(low_beta_label, "Middle BETA", high_beta_label))) +
+  theme_light()
+soil_c_plot
+
+# save plot 
+ggsave(filename ="figures/soil_c_plot.png", 
+       plot = veg_c_plot, 
+       device = "png", 
+       width = 7, 
+       height = 5, 
+       units = "in", 
+       dpi = 300)
 
 # Sofia 
 #TODO
