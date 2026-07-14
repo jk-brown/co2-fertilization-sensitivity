@@ -46,33 +46,150 @@ ggsave(filename ="figures/npp_plot.png",
 
 # Izzah 
 #TODO
-## Plot 1b - VEG_C 
-# get subset of VEG_C data
+## Plot 1b - veg_c 
+# get subset of veg_c data
+veg_c_dat <- subset(x = time_series_plot_data, 
+                  variable == "veg_c")
+veg_c_units <- unique(veg_c_dat$units)
 
+# plot VEG_C
+
+veg_c_plot <-
+  ggplot(data = veg_c_dat) +
+  geom_line(aes(
+    x = year,
+    y = value,
+    group = run_number,
+    color = beta_group
+  ),
+  alpha = 0.35) +
+  labs(x = "Year", 
+       y = veg_c_units, 
+       color = "BETA Group") +
+  scale_color_manual(values = setNames(
+    beta_group_cols, 
+    c(low_beta_label, "Middle BETA", high_beta_label))) +
+  theme_light()
+veg_c_plot
+
+# save plot 
+ggsave(filename ="figures/veg_c_plot.png", 
+       plot = veg_c_plot, 
+       device = "png", 
+       width = 7, 
+       height = 5, 
+       units = "in", 
+       dpi = 300)
 
 # Izzah 
 #TODO
 ## Plot 1c - SOIL_C 
 # get subset of SOIL_C data
 
+soil_c_dat <- subset(x = time_series_plot_data, 
+                    variable == "soil_c")
+soil_c_units <- unique(soil_c_dat$units)
+
 # plot SOIL_C
 
+soil_c_plot <-
+  ggplot(data = soil_c_dat) +
+  geom_line(aes(
+    x = year,
+    y = value,
+    group = run_number,
+    color = beta_group
+  ),
+  alpha = 0.35) +
+  labs(x = "Year", 
+       y = soil_c_units, 
+       color = "BETA Group") +
+  scale_color_manual(values = setNames(
+    beta_group_cols, 
+    c(low_beta_label, "Middle BETA", high_beta_label))) +
+  theme_light()
+soil_c_plot
+
+# save plot 
+ggsave(filename ="figures/soil_c_plot.png", 
+       plot = veg_c_plot, 
+       device = "png", 
+       width = 7, 
+       height = 5, 
+       units = "in", 
+       dpi = 300)
 
 # Sofia 
 #TODO
 ## Plot 1d - CONCENTRATIONS_CO2 
 # get subset of CONCENTRATIONS_CO2 data
+CO2_concentration_dat <- subset(x = time_series_plot_data, 
+                  variable == "CO2_concentration")
+CO2_concentration_units <- unique(CO2_concentration_dat$units)
 
 # plot CONCENTRATIONS_CO2
+CO2_concentration_plot <-
+  ggplot(data = CO2_concentration_dat) +
+  geom_line(aes(
+    x = year,
+    y = value,
+    group = run_number,
+    color = beta_group
+  ),
+  alpha = 0.35) +
+  labs(x = "Year", 
+       y = CO2_concentration_units, 
+       color = "BETA Group") +
+  scale_color_manual(values = setNames(
+    beta_group_cols, 
+    c(low_beta_label, "Middle BETA", high_beta_label))) +
+  theme_light()
+CO2_concentration_plot
 
+# save plot 
+ggsave(filename ="figures/CO2_concentration_plot.png", 
+       plot = CO2_concentration_plot, 
+       device = "png", 
+       width = 7, 
+       height = 5, 
+       units = "in", 
+       dpi = 300)
 
 # Sofia 
 #TODO
 ## Plot 1e - GMST 
 # get subset of GMST data
+gmst_dat <- subset(x = time_series_plot_data, 
+                  variable == "gmst")
+gmst_units <- unique(gmst_dat$units)
 
 # plot CONCENTRATIONS_CO2
+gmst_plot <-
+  ggplot(data = gmst_dat) +
+  geom_line(aes(
+    x = year,
+    y = value,
+    group = run_number,
+    color = beta_group
+  ),
+  alpha = 0.35) +
+  labs(x = "Year", 
+       y = gmst_units, 
+       color = "BETA Group") +
+  scale_color_manual(values = setNames(
+    beta_group_cols, 
+    c(low_beta_label, "Middle BETA", high_beta_label))) +
+  theme_light()
+gmst_plot
 
+# save plot 
+ggsave(filename ="figures/gmst_plot.png", 
+       plot = gmst_plot, 
+       device = "png", 
+       width = 7, 
+       height = 5, 
+       units = "in", 
+       dpi = 300)
 
 
 ###### Keep below for making combined figures. 
@@ -83,7 +200,7 @@ combined_plot <-
   npp_plot +
   veg_c_plot +
   soil_c_plot +
-  co2_plot +
+  CO2_concentration_plot +
   gmst_plot +
   guide_area() +
   plot_layout(
@@ -101,28 +218,15 @@ combined_plot
 
 ## Plot each panel individually
 ## Plot 2a - NPP
-beta_on_npp_effect <- subset(x = beta_effect, 
-                             variable == "NPP")
-beta_on_npp_plot <- ggplot(data = beta_on_npp_effect, 
-                      aes(x = beta_group, 
-                          y = mean_value,
-                          color = beta_group)) +
-  geom_pointrange(
-    aes(
-      ymin = lower_value,
-      ymax = upper_value), 
-    size = 0.8) + 
-  labs(
-    y = npp_units,
-    x = "BETA Group",
-    title = "Mean Late-century variable response (95% CI)"
-  ) + 
-  scale_color_manual(
-    values = setNames(
-      beta_group_cols, 
-    c("Low BETA", "Middle BETA", "High BETA"))) +
-  guides(color = "none") +
-  theme_light()
+
+
+beta_on_npp_plot <- 
+  plot_beta_effect(
+    x = beta_effect, 
+    units = npp_units, 
+    var = "NPP", 
+    colors = beta_group_cols
+    )
 beta_on_npp_plot
 
 # save plot 
@@ -137,16 +241,62 @@ ggsave(filename ="figures/beta_on_npp_plot.png",
 ### We need to make the above figure for each of the 
 
 ## Plot 2b - VEG_C
-
+beta_on_veg_c_plot <- 
+  plot_beta_effect(
+    x = beta_effect, 
+    units = veg_c_units, 
+    var = "veg_c", 
+    colors = beta_group_cols
+  )
+beta_on_veg_c_plot
 
 ## Plot 2c - SOIL_C
-
+beta_on_soil_c_plot <- 
+  plot_beta_effect(
+    x = beta_effect, 
+    units = soil_c_units, 
+    var = "soil_c", 
+    colors = beta_group_cols
+  )
+beta_on_soil_c_plot
 
 ## Plot 2d - CO2_concentrations
+beta_on_CO2_concentration_plot <- 
+  plot_beta_effect(
+    x = beta_effect, 
+    units = CO2_concentration_units, 
+    var = "CO2_concentration", 
+    colors = beta_group_cols
+  )
+beta_on_CO2_concentration_plot
 
+# save plot 
+ggsave(filename ="figures/beta_on_CO2_concentration_plot.png", 
+       plot = beta_on_CO2_concentration_plot, 
+       device = "png", 
+       width = 5, 
+       height = 3, 
+       units = "in", 
+       dpi = 300)
 
 ## Plot 2e - gmst
+beta_on_gmst_plot <- 
+  plot_beta_effect(
+    x = beta_effect, 
+    units = gmst_units, 
+    var = "gmst", 
+    colors = beta_group_cols
+  )
+beta_on_gmst_plot
 
+# save plot 
+ggsave(filename ="figures/beta_on_gmst_plot.png", 
+       plot = beta_on_gmst_plot, 
+       device = "png", 
+       width = 5, 
+       height = 3, 
+       units = "in", 
+       dpi = 300)
 
 # Plot 3: Standardized BETA signal across variables
 
