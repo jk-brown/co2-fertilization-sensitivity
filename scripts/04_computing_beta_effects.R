@@ -20,7 +20,7 @@ beta_signal <- beta_signal_data(lc_metric_results)
 
 ## Plotting Results 
 
-# Q1 -- Plot mean values with CI (5-95%)
+# Q1 -- Initial plot for mean values with CI (5-95%)
 
 beta_effect_plot <- ggplot(
   data = beta_effect, 

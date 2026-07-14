@@ -12,28 +12,46 @@ mod_beta_plot_data <-
   beta_values_rn %>% 
   left_join(mod_result, by = "run_number")
     
-# 1.1 Add BETA group column
-beta_low <- quantile (mod_beta_plot_data$BETA, probs = 0.20)
-beta_high <- quantile (mod_beta_plot_data$BETA, probs = 0.80)
+# 1.1 Calculate BETA group cutoffs
+beta_low <- quantile(
+  mod_beta_plot_data$BETA,
+  probs = 0.20,
+  na.rm = TRUE
+)
 
-# 1.2 edit plot data with BETA groups 
-high_low_beta_plot_data <- mod_beta_plot_data %>% 
+beta_high <- quantile(
+  mod_beta_plot_data$BETA,
+  probs = 0.80,
+  na.rm = TRUE
+)
+
+# Automatically create labels from the calculated cutoffs
+low_beta_label <- paste0(
+  "Low BETA (< ",
+  round(beta_low, 2),
+  ")"
+)
+
+high_beta_label <- paste0(
+  "High BETA (> ",
+  round(beta_high, 2),
+  ")"
+)
+
+# 1.2 Add BETA groups
+time_series_plot_data <- mod_beta_plot_data %>% 
   mutate(
     beta_group = case_when(
-      BETA <= beta_low ~ "Low BETA (< 0.59)",
-      BETA >= beta_high ~ "High BETA (> 0.75)",
-      TRUE ~ "Middle BETA"), 
+      BETA <= beta_low  ~ low_beta_label,
+      BETA >= beta_high ~ high_beta_label,
+      TRUE              ~ "Middle BETA"
+    ),
     beta_group = factor(
       beta_group, 
       levels = c(
-        "Low BETA (< 0.59)", 
-        "Middle BETA", 
-        "High BETA (> 0.75)"
+        low_beta_label,
+        "Middle BETA",
+        high_beta_label
       )
     )
   )
-
-# 1.3 Save time series plot data with BETA groupings
-write.csv(high_low_beta_plot_data, 
-          "outputs/time_series_plot_data.csv", 
-          row.names = F)
