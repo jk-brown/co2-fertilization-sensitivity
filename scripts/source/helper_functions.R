@@ -200,17 +200,17 @@ beta_signal_data <- function(data, beta_low = 0.20, beta_high = 0.80) {
 #'
 #' @examples
 plot_beta_effect <- function(x, units, colors, var) {
+  # subset data
+  data <- subset(x = x, variable == var)
   
-  data <- subset(x = x, 
-                 variable == var)
- 
-   #plotting
+  
+  #plotting
   ggplot(data = data, aes(x = beta_group, y = mean_value, color = beta_group)) +
     geom_pointrange(aes(ymin = lower_value, ymax = upper_value), size = 0.8) +
     labs(y = units,
-         x = "BETA Group",
-         title = unique(data$variable)) +
+         x = NULL) +
     scale_color_manual(values = setNames(colors, c("Low BETA", "Middle BETA", "High BETA"))) +
+    scale_y_continuous(n.breaks = 5)+
     guides(color = "none") +
     theme_light()
 }

@@ -26,13 +26,21 @@ npp_plot <-
     color = beta_group
   ),
   alpha = 0.35) +
-  labs(x = "Year", 
+  labs(subtitle = "NPP",  
+       x = "Year", 
        y = npp_units, 
        color = "BETA Group") +
   scale_color_manual(values = setNames(
     beta_group_cols, 
     c(low_beta_label, "Middle BETA", high_beta_label))) +
-  theme_light()
+  scale_y_continuous(n.breaks = 5) +
+  theme_light() +
+  theme(
+    axis.text.x = element_text(
+      angle = 45, 
+      hjust = 1
+    )
+  )
 npp_plot
 
 # save plot 
@@ -53,7 +61,6 @@ veg_c_dat <- subset(x = time_series_plot_data,
 veg_c_units <- unique(veg_c_dat$units)
 
 # plot VEG_C
-
 veg_c_plot <-
   ggplot(data = veg_c_dat) +
   geom_line(aes(
@@ -63,13 +70,21 @@ veg_c_plot <-
     color = beta_group
   ),
   alpha = 0.35) +
-  labs(x = "Year", 
+  labs(subtitle = "Vegetative C",
+       x = "Year", 
        y = veg_c_units, 
        color = "BETA Group") +
   scale_color_manual(values = setNames(
     beta_group_cols, 
     c(low_beta_label, "Middle BETA", high_beta_label))) +
-  theme_light()
+  scale_y_continuous(n.breaks = 5) +
+  theme_light() +
+  theme(
+    axis.text.x = element_text(
+      angle = 45, 
+      hjust = 1
+    )
+  )
 veg_c_plot
 
 # save plot 
@@ -91,7 +106,6 @@ soil_c_dat <- subset(x = time_series_plot_data,
 soil_c_units <- unique(soil_c_dat$units)
 
 # plot SOIL_C
-
 soil_c_plot <-
   ggplot(data = soil_c_dat) +
   geom_line(aes(
@@ -101,13 +115,21 @@ soil_c_plot <-
     color = beta_group
   ),
   alpha = 0.35) +
-  labs(x = "Year", 
+  labs(subtitle = "Soil C", 
+       x = "Year", 
        y = soil_c_units, 
        color = "BETA Group") +
   scale_color_manual(values = setNames(
     beta_group_cols, 
     c(low_beta_label, "Middle BETA", high_beta_label))) +
-  theme_light()
+  scale_y_continuous(n.breaks = 5) +
+  theme_light() +
+  theme(
+    axis.text.x = element_text(
+      angle = 45, 
+      hjust = 1
+    )
+  )
 soil_c_plot
 
 # save plot 
@@ -137,13 +159,21 @@ CO2_concentration_plot <-
     color = beta_group
   ),
   alpha = 0.35) +
-  labs(x = "Year", 
-       y = CO2_concentration_units, 
+  labs(subtitle = expression("Atmospheric "~CO[2]), 
+       x = "Year", 
+       y = expression(CO[2]~" concentration (ppmv)"), 
        color = "BETA Group") +
   scale_color_manual(values = setNames(
     beta_group_cols, 
     c(low_beta_label, "Middle BETA", high_beta_label))) +
-  theme_light()
+  scale_y_continuous(n.breaks = 5) +
+  theme_light() +
+  theme(
+    axis.text.x = element_text(
+      angle = 45, 
+      hjust = 1
+    )
+  )
 CO2_concentration_plot
 
 # save plot 
@@ -173,13 +203,21 @@ gmst_plot <-
     color = beta_group
   ),
   alpha = 0.35) +
-  labs(x = "Year", 
-       y = gmst_units, 
+  labs(subtitle = "GMST", 
+       x = "Year", 
+       y = expression("GMST ("*degree*"C)"), 
        color = "BETA Group") +
   scale_color_manual(values = setNames(
     beta_group_cols, 
     c(low_beta_label, "Middle BETA", high_beta_label))) +
-  theme_light()
+  scale_y_continuous(n.breaks = 5) +
+  theme_light() +
+  theme(
+    axis.text.x = element_text(
+      angle = 45, 
+      hjust = 1
+    )
+  )
 gmst_plot
 
 # save plot 
@@ -195,7 +233,7 @@ ggsave(filename ="figures/gmst_plot.png",
 ###### Keep below for making combined figures. 
 library(patchwork)
 
-combined_plot <-
+combined_timeseries_plot <-
   # may need to replace names depending on code above. 
   npp_plot +
   veg_c_plot +
@@ -213,13 +251,19 @@ combined_plot <-
   ) 
 combined_plot
 
+# Save combined plot
+ggsave(filename ="figures/combined_timeseries_plot.png", 
+       plot = combined_timeseries_plot, 
+       device = "png", 
+       width = 7, 
+       height = 5, 
+       units = "in", 
+       dpi = 300)
 
 # Plot 2: Mean late century response for each variable across BETA levels
 
 ## Plot each panel individually
 ## Plot 2a - NPP
-
-
 beta_on_npp_plot <- 
   plot_beta_effect(
     x = beta_effect, 
@@ -227,8 +271,8 @@ beta_on_npp_plot <-
     var = "NPP", 
     colors = beta_group_cols
     )
-beta_on_npp_plot
-
+beta_on_npp_plot <- beta_on_npp_plot +
+  labs(subtitle = "NPP")
 # save plot 
 ggsave(filename ="figures/beta_on_npp_plot.png", 
        plot = beta_on_npp_plot, 
@@ -248,7 +292,17 @@ beta_on_veg_c_plot <-
     var = "veg_c", 
     colors = beta_group_cols
   )
-beta_on_veg_c_plot
+beta_on_veg_c_plot <-beta_on_veg_c_plot +
+  labs(subtitle = "Vegetative C")
+
+#save plot
+ggsave(filename ="figures/beta_on_veg_c_plot.png", 
+       plot = beta_on_veg_c_plot, 
+       device = "png", 
+       width = 5, 
+       height = 3, 
+       units = "in", 
+       dpi = 300)
 
 ## Plot 2c - SOIL_C
 beta_on_soil_c_plot <- 
@@ -258,18 +312,29 @@ beta_on_soil_c_plot <-
     var = "soil_c", 
     colors = beta_group_cols
   )
-beta_on_soil_c_plot
+beta_on_soil_c_plot <- beta_on_soil_c_plot +
+  labs(subtitle = "Soil C")
+
+#save plot
+ggsave(filename ="figures/beta_on_soil_c_plot.png", 
+       plot = beta_on_veg_c_plot, 
+       device = "png", 
+       width = 5, 
+       height = 3, 
+       units = "in", 
+       dpi = 300)
 
 ## Plot 2d - CO2_concentrations
 beta_on_CO2_concentration_plot <- 
   plot_beta_effect(
     x = beta_effect, 
-    units = CO2_concentration_units, 
+    units = expression(CO[2]~"concentration (ppmv)"), 
     var = "CO2_concentration", 
     colors = beta_group_cols
   )
-beta_on_CO2_concentration_plot
-
+beta_on_CO2_concentration_plot <- beta_on_CO2_concentration_plot +
+  labs(subtitle = expression("Atmospheric "~CO[2]))
+  
 # save plot 
 ggsave(filename ="figures/beta_on_CO2_concentration_plot.png", 
        plot = beta_on_CO2_concentration_plot, 
@@ -283,11 +348,12 @@ ggsave(filename ="figures/beta_on_CO2_concentration_plot.png",
 beta_on_gmst_plot <- 
   plot_beta_effect(
     x = beta_effect, 
-    units = gmst_units, 
+    units = expression("GMST ("*degree*"C)"), 
     var = "gmst", 
     colors = beta_group_cols
   )
-beta_on_gmst_plot
+beta_on_gmst_plot <-beta_on_gmst_plot +
+  labs(subtitle = "GMST")
 
 # save plot 
 ggsave(filename ="figures/beta_on_gmst_plot.png", 
@@ -298,6 +364,33 @@ ggsave(filename ="figures/beta_on_gmst_plot.png",
        units = "in", 
        dpi = 300)
 
+# using patch work to combine Beta effect plots
+beta_effect_combined_plot <-
+  # may need to replace names depending on code above. 
+  beta_on_npp_plot +
+  beta_on_veg_c_plot +
+  beta_on_soil_c_plot +
+  beta_on_CO2_concentration_plot +
+  beta_on_gmst_plot +
+  plot_layout(
+    design = "
+    ABC
+    DEF
+    ",
+    guides = "collect"
+  ) 
+beta_effect_combined_plot
+
+# save the combined beta effect plot
+ggsave(filename ="figures/beta_effect_combined_plot.png", 
+       plot = beta_effect_combined_plot, 
+       device = "png", 
+       width = 10, 
+       height = 5, 
+       units = "in", 
+       dpi = 300)
+
+
 # Plot 3: Standardized BETA signal across variables
 
 # reorganize the factors so the order is correct.
@@ -307,24 +400,52 @@ beta_signal$variable <- factor(
 )
 
 beta_signal_plot <- 
-  ggplot() + 
-  geom_col(
+  ggplot(
     data = beta_signal,
     aes(
       x = variable,
       y = abs_standardized_separation
-    ),
-    fill = "white",
+    )
+  ) + 
+  geom_col(
+    fill = "lightgrey",
     color = "black"
-  ) + 
+  ) +
+  scale_x_discrete(
+    limits = c(
+      "NPP",
+      "veg_c",
+      "soil_c",
+      "CO2_concentration",
+      "gmst"
+    ),
+    labels = c(
+      "NPP" = "NPP",
+      "veg_c" = "Vegetative carbon",
+      "soil_c" = "Soil carbon",
+      "CO2_concentration" = expression("Atmospheric "*CO[2]),
+      "gmst" = "GMST"
+    )
+  ) +
   labs(
-    x = "Variable",
-    y = "Standardized difference between low- and high-BETA",
-    title = "BETA-driven differences across variables"
+    x = NULL,
+    y = "Separation between low- and\nhigh-BETA outcomes",
+    subtitle = "Effect of BETA uncertainty on late-century model outputs"
   ) + 
-  theme_light()
+  theme_light() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank()
+  )
 
 beta_signal_plot
 
-
-
+# save beta signal plot
+ggsave(filename ="figures/beta_signal_plot.png", 
+       plot = beta_signal_plot, 
+       device = "png", 
+       width = 7, 
+       height = 5, 
+       units = "in", 
+       dpi = 300)
+rbon
