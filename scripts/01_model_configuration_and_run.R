@@ -14,7 +14,7 @@ core <- newcore(ssp245_ini, name = "SSP2-4.5")
 set.seed(25) # standardize random param draws
 
 # 3.1 produce 50 draws of BETA
-param_values <- generate_params(core, draws = 50)
+param_values <- generate_params(core, draws = 500)
   
 ## sanity check
 head(param_values)

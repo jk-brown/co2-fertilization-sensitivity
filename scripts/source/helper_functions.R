@@ -192,8 +192,8 @@ beta_signal_data <- function(data, beta_low = 0.20, beta_high = 0.80) {
 #'
 #' @param units Character string for the units of the variable being plotted. 
 #' @param colors Character string of colors for BETA factor levels.
-#' @param x 
-#' @param var 
+#' @param x data frame
+#' @param var names of varibles to plot
 #'
 #' @returns A plot with summary values for each BETA factor level 
 #' @export
